@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES Encryption and Decryption</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .toast {
+            position: absolute;
+            top: 3%;
+            display: none;
+            right: 3%;
+            border: 1px solid rgb(48, 138, 66);
+            border-radius: 10px;
+            padding: 10px 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toast" class="toast"></div>
+
+    <div class="container">
+        <h2>Caesar Cipher</h2>
+
+        <textarea id="inputText" placeholder="Enter text" rows="10" cols="100"></textarea>
+        <br>
+        <input type="number" id="inputKey" placeholder="Enter encryption key">
+        <br>
+        <input type="button" value="Encrypt" onclick="encrypt()">
+        <input type="button" value="Decrypt" onclick="decrypt()">
+        <div id="encDiv">
+            <label>Encrypted text</label>
+            <input type="text" id="encrypted" class="out" placeholder="null">
+            <button onclick="copyEncText()">Copy</button>
+        </div>
+        <div id="decDiv">
+            <label>Decrypted text</label>
+            <input type="text" id="decrypted" class="out" placeholder="null ">
+            <button onclick="copyDecText()">Copy</button>
+        </div>
+
+    </div>
+
+    <script>
+        const toast = document.getElementById('toast');
+        function encrypt() {
+            var text = document.getElementById("inputText").value;
+            var key = document.getElementById("inputKey").value;
+            var div = document.getElementById("encDiv");
+
+
+            div.style = "display:block;"
+
+            var arr = new Uint32Array(text.length);
+
+            for (var i = 0; i < text.length; i++) {
+                arr[i] = text.charCodeAt(i) - 'a'.charCodeAt(0);
+            }
+
+            console.log(arr);
+
+            document.getElementById("encrypted").value = "encryptedText";
+        }
+
+        function decrypt() {
+            var encryptedText = document.getElementById("inputText").value;
+            var key = document.getElementById("inputKey").value;
+            var div = document.getElementById("decDiv");
+
+            div.style = "display:block;"
+
+
+
+            var decryptedText = "other";
+            document.getElementById("decrypted").value = decryptedText;
+        }
+        function copyEncText() {
+            var copyText = document.getElementById("encrypted");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            document.execCommand("copy");
+            showToast("Copied the text: " + copyText.value);
+        }
+        function copyDecText() {
+
+            var copyText = document.getElementById("decrypted");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            document.execCommand("copy");
+            showToast("Copied the text: " + copyText.value);
+        }
+
+        function showToast(message) {
+
+
+            toast.innerText = message;
+
+            toast.style.display = 'block';
+
+            setTimeout(function () {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+
+</body>
+
+</html>
